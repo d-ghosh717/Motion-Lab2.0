@@ -1,0 +1,496 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Variables ── */
+:root {
+  --accent: #00FFB2;
+  --accent-dim: #00CC8E;
+  --ember: #FF4D00;
+  --bg: #050508;
+  --bg-elevated: #0D0D14;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-hover: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-accent: rgba(0, 255, 178, 0.3);
+  --text-primary: #F0F0F5;
+  --text-secondary: rgba(240, 240, 245, 0.55);
+  --text-muted: rgba(240, 240, 245, 0.3);
+  --radius: 16px;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+  --duration-xslow: 1000ms;
+}
+
+.light {
+  --bg: #F4F4F0;
+  --bg-elevated: #EAEAE4;
+  --surface: rgba(0, 0, 0, 0.04);
+  --surface-hover: rgba(0, 0, 0, 0.08);
+  --border: rgba(0, 0, 0, 0.08);
+  --text-primary: #0A0A0F;
+  --text-secondary: rgba(10, 10, 15, 0.55);
+  --text-muted: rgba(10, 10, 15, 0.3);
+}
+
+/* ── Base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  /* Lenis handles this */
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none;
+  /* Custom cursor */
+  transition: background 0.6s var(--ease-in-out), color 0.4s var(--ease-in-out);
+}
+
+/* Hide cursor on mobile */
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ── Selection ── */
+::selection {
+  background: rgba(0, 255, 178, 0.2);
+  color: var(--accent);
+}
+
+/* ── Typography ── */
+.font-display {
+  font-family: 'Bebas Neue', cursive;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ── Glass ── */
+.glass {
+  background: var(--surface);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius);
+}
+
+/* ── Glow Effects ── */
+.glow-accent {
+  box-shadow: 0 0 30px rgba(0, 255, 178, 0.2), 0 0 60px rgba(0, 255, 178, 0.05);
+}
+
+.glow-accent-strong {
+  box-shadow: 0 0 20px rgba(0, 255, 178, 0.5), 0 0 60px rgba(0, 255, 178, 0.2), 0 0 120px rgba(0, 255, 178, 0.05);
+}
+
+.text-glow {
+  text-shadow: 0 0 30px rgba(0, 255, 178, 0.6);
+}
+
+/* ── Gradient Text ── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent) 0%, #00B4D8 50%, var(--accent) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ── Noise Texture Overlay ── */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+  border-radius: inherit;
+}
+
+/* ── Section Base ── */
+section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Utility classes ── */
+.magnetic {
+  display: inline-block;
+}
+
+.reveal-text {
+  overflow: hidden;
+  display: inline-block;
+}
+
+.reveal-text span {
+  display: inline-block;
+  transform: translateY(110%);
+}
+
+/* ── Progress Bar ── */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 9999;
+  transform-origin: left;
+  box-shadow: 0 0 10px var(--accent);
+}
+
+/* ── Custom Cursor ── */
+#cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, opacity 0.2s;
+  box-shadow: 0 0 10px var(--accent);
+}
+
+#cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(0, 255, 178, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s var(--ease-spring), height 0.4s var(--ease-spring), border-color 0.3s, opacity 0.3s;
+}
+
+#cursor-dot.hovering {
+  width: 10px;
+  height: 10px;
+}
+
+#cursor-ring.hovering {
+  width: 60px;
+  height: 60px;
+  border-color: var(--accent);
+}
+
+#cursor-ring.clicking {
+  width: 28px;
+  height: 28px;
+  border-color: var(--accent);
+}
+
+/* ── Ripple ── */
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-btn .ripple-wave {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 255, 178, 0.3);
+  transform: scale(0);
+  animation: rippleAnim 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes rippleAnim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ── Floating Label ── */
+.float-label {
+  position: relative;
+}
+
+.float-label input,
+.float-label textarea {
+  width: 100%;
+  padding: 20px 16px 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  resize: none;
+}
+
+.float-label input:focus,
+.float-label textarea:focus {
+  border-color: var(--accent);
+  background: rgba(0, 255, 178, 0.03);
+  box-shadow: 0 0 0 3px rgba(0, 255, 178, 0.1);
+}
+
+.float-label label {
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  color: var(--text-muted);
+  font-size: 14px;
+  pointer-events: none;
+  transition: all 0.25s var(--ease-out-expo);
+}
+
+.float-label input:focus~label,
+.float-label input:not(:placeholder-shown)~label,
+.float-label textarea:focus~label,
+.float-label textarea:not(:placeholder-shown)~label {
+  top: 6px;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+/* ── Navbar ── */
+.nav-link {
+  position: relative;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s var(--ease-out-expo);
+}
+
+.nav-link:hover {
+  color: var(--accent);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ── Particles Canvas ── */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ── Scroll Story Sticky ── */
+.scroll-story-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── FLIP transition ── */
+.flip-item {
+  transition: all 0.5s var(--ease-spring);
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* ── Animated BG Gradient ── */
+.animated-bg {
+  background: linear-gradient(-45deg, #050508, #0A0A12, #050510, #060508);
+  background-size: 400% 400%;
+  animation: bgShift 15s ease infinite;
+}
+
+@keyframes bgShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ── Hover Trail ── */
+.hover-trail {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 9990;
+}
+
+/* ── Card 3D ── */
+.card-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-3d-inner {
+  transition: transform 0.1s linear;
+  transform-style: preserve-3d;
+}
+
+/* ── Masonry ── */
+.masonry-grid {
+  columns: 3;
+  column-gap: 20px;
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .masonry-grid {
+    columns: 1;
+  }
+}
+
+/* ── Color Swatch ── */
+.swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.swatch.active {
+  border-color: white;
+  transform: scale(1.2);
+}
+
+/* ── FPS meter ── */
+.fps-meter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+}
+
+/* ── Tooltip ── */
+.tooltip-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-content {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid var(--border-accent);
+  color: var(--text-primary);
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+}
+
+.tooltip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--border-accent);
+}
